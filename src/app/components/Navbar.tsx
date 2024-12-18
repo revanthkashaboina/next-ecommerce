@@ -10,7 +10,7 @@ const Navbar = () => {
         <div className='h-20 px-4 md:px-8  lg:px-16 xl:px-32 2xl:px-64 relative'>
             {/* MOBILE */}
             <div className='md:hidden h-full flex items-center justify-between'>
-                <Link href='/' className='text-2xl font-bold'>E-Commerce</Link>
+                <Link href='/' className='text-2xl font-bold'>Commerce</Link>
                 <Menu />
             </div>
 
