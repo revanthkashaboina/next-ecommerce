@@ -6,11 +6,11 @@ import React from 'react'
 import DOMPurify from "isomorphic-dompurify";
 
 const PRODUCT_PER_PAGE = 20
-const ProductList = async ({ categoryId, limit }: { categoryId: string; limit?: number }) => {
+const ProductList = async ({ categoryId, limit, searchParams }: { categoryId: string; limit?: number; searchParams?: any }) => {
 
     const wixClient = wixClientServer();
     const response = await wixClient.products.queryProducts().eq("collectionIds", categoryId).limit(limit || PRODUCT_PER_PAGE).find();
-    console.log(response);
+    // console.log(response);
 
     return (
         <div className='flex gap-x-8 gap-y-16 justify-between flex-wrap'>
