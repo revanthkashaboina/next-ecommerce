@@ -1,10 +1,26 @@
 "use client"
 import { products } from '@wix/stores';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import Add from './Add';
 
 const CustomizeProducts = ({ productId, variants, productOptions }: { productId: string; variants: products.Variant[]; productOptions: products.ProductOption[] }) => {
 
     const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: string }>({});
+    const [selectedVariants, setSelectedVariants] = useState<products.Variant>()
+
+
+    //whenever selecetdOptions changes we're updating the variant. So using useEffect hook to update the variant
+
+    useEffect(()=>{
+        const variant = variants.find((v) =>{
+            const variantChoices = v.choices;
+            if(!variantChoices) return false;
+
+            return Object.entries(selectedOptions).every(([key, value]) => variantChoices[key] === value)
+        })
+
+        setSelectedVariants(variant);
+    }, [selectedOptions, variants])
 
     const handleOptionSelect = (optionType: string, choice: string) => {
         setSelectedOptions((prev) => ({ ...prev, [optionType]: choice }))
@@ -53,6 +69,9 @@ const CustomizeProducts = ({ productId, variants, productOptions }: { productId:
                     </ul>
                 </div>
             ))}
+
+            <Add productId = {productId!} variantId={selectedVariants?._id || "00000000-0000-0000-0000-000000000000"} stockNumber = {selectedVariants?.stock?.quantity || 0}/>
+
             {/* COLOR */}
             {/*
             <ul className='flex items-center gap-3'>
