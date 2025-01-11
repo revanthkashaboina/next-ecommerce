@@ -10,6 +10,8 @@ const ListPage = async({searchParams}:{searchParams:any}) => {
   const wixClinet = await wixClientServer();
   const response = await wixClinet.collections.getCollectionBySlug(category);
 
+  // console.log("response=====================", response);
+
   return (
     <div className='px-4 md:px-8  lg:px-16 xl:px-32 2xl:px-64'>
       {/* Campaign */}

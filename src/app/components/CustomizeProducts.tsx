@@ -38,7 +38,7 @@ const CustomizeProducts = ({ productId, variants, productOptions }: { productId:
         })
     }
 
-    console.log(selectedOptions);
+    // console.log(selectedOptions);
 
     return (
         <div className='flex flex-col gap-6'>
