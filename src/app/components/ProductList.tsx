@@ -4,8 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import DOMPurify from "isomorphic-dompurify";
+import Pagination from './Pagination';
 
-const PRODUCT_PER_PAGE = 20;
+const PRODUCT_PER_PAGE = 8;
 
 const ProductList = async ({
   categoryId,
@@ -27,7 +28,9 @@ const ProductList = async ({
     .eq("collectionIds", categoryId)
     .hasSome("productType", searchParams?.type ? [searchParams.type] : ["physical", "digital"])
     .gt("priceData.price", parseFloat(searchParams?.min) || 0)
-    .lt("priceData.price", parseFloat(searchParams?.max) || 999999);        
+    .lt("priceData.price", parseFloat(searchParams?.max) || 999999)
+    .limit(limit || PRODUCT_PER_PAGE)
+    .skip(searchParams?.page ? parseInt(searchParams.page) * (limit || PRODUCT_PER_PAGE) : 0);
 
   // Handle sorting
   if (searchParams?.sort) {
@@ -92,6 +95,7 @@ const ProductList = async ({
           </button>
         </Link>
       ))}
+      <Pagination currentPage={res.currentPage || 0} hasPrev={res.hasPrev()} hasNext={res.hasNext()} />
     </div>
   );
 };
